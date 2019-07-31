@@ -168,7 +168,10 @@ class MongoDB(object):
 
         # db info
         self.add_metrics('mongodb.version', ss['version'])
+        #Comment block if version less than 3
+        #####
         self.add_metrics('mongodb.storageEngine', ss['storageEngine']['name'])
+        #####
         self.add_metrics('mongodb.uptime', int(ss['uptime']))
         self.add_metrics('mongodb.okstatus', int(ss['ok']))
 
@@ -196,6 +199,9 @@ class MongoDB(object):
         self.add_metrics('mongodb.page.faults',
                          ss['extra_info']['page_faults'])
 
+        #Comment block if version less than 3
+        
+        #####
         #wired tiger
         if ss['storageEngine']['name'] == 'wiredTiger':
             self.add_metrics('mongodb.used-cache',
@@ -207,7 +213,8 @@ class MongoDB(object):
             self.add_metrics('mongodb.dirty-cache',
                              ss['wiredTiger']['cache']
                              ["tracked dirty bytes in the cache"])
-
+        #####
+        
         # global lock
         lock_total_time = ss['globalLock']['totalTime']
         self.add_metrics('mongodb.globalLock.totalTime', lock_total_time)
